@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VERIDYN PROCESS AUTOMATION — Control &amp; Automation Engineering</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b1116;
+    --bg-2:#101a22;
+    --surface:#121d25;
+    --surface-2:#17242d;
+    --surface-3:#1d2d37;
+    --border:rgba(148,163,184,.18);
+    --text:#edf3f7;
+    --text-muted:#9aaab7;
+    --accent:#ff9f43;
+    --accent-strong:#ff7b1a;
+    --accent-soft:rgba(255,159,67,.12);
+    --accent-2:#69d2e7;
+    --accent-2-soft:rgba(105,210,231,.12);
+    --shadow:0 24px 70px rgba(4,10,16,.35);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:
+      radial-gradient(circle at top left, rgba(255,159,67,.08), transparent 28%),
+      radial-gradient(circle at right center, rgba(105,210,231,.06), transparent 25%),
+      linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+    color:var(--text);
+    font-family:'IBM Plex Sans', sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    background-image:linear-gradient(rgba(255,255,255,.012) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.012) 1px, transparent 1px);
+    background-size:26px 26px;
+    mask-image:radial-gradient(circle at center, black 45%, transparent 100%);
+    pointer-events:none;
+  }
+  img,svg{display:block; max-width:100%;}
+  a{color:inherit; text-decoration:none;}
+  :focus-visible{outline:2px solid var(--accent); outline-offset:3px;}
+
+  .wrap{max-width:1180px; margin:0 auto; padding:0 32px;}
+  @media (max-width:640px){ .wrap{padding:0 20px;} }
+
+  h1,h2,h3{
+    font-family:'Barlow Condensed', sans-serif;
+    font-weight:700;
+    letter-spacing:.01em;
+    line-height:1.05;
+    text-transform:uppercase;
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--accent);
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:22px; height:1px;
+    background:var(--accent);
+    display:inline-block;
+  }
+  .tag{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    color:var(--text-muted);
+    letter-spacing:.06em;
+  }
+
+  /* ---------- Photo placeholder ---------- */
+  .photo{
+    aspect-ratio:4/3;
+    background:
+      repeating-linear-gradient(45deg, var(--surface-2), var(--surface-2) 9px, var(--surface) 9px, var(--surface) 18px);
+    border:1px solid rgba(255,255,255,.06);
+    border-radius:18px;
+    display:flex; align-items:flex-end;
+    position:relative;
+    overflow:hidden;
+    box-shadow:var(--shadow);
+  }
+  .photo .cap{
+    background:var(--bg);
+    border:1px solid var(--border);
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10.5px;
+    color:var(--text-muted);
+    padding:7px 10px;
+    margin:12px;
+    letter-spacing:.03em;
+  }
+  .photo.wide{aspect-ratio:16/9;}
+  .photo.square{aspect-ratio:1/1;}
+
+  /* ---------- Header ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(18,22,26,.94);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--border);
+  }
+  .nav{
+    display:flex; align-items:center; justify-content:space-between;
+    height:76px;
+  }
+  .brand{
+    display:flex; align-items:center; gap:12px;
+    font-family:'Barlow Condensed', sans-serif;
+    font-weight:700; font-size:22px; letter-spacing:.02em;
+    text-transform:uppercase;
+    color:var(--accent);
+  }
+  .brand .logo{
+    width:64px; height:64px;
+    display:flex; align-items:center; justify-content:center;
+    position:relative;
+    flex-shrink:0;
+    object-fit:contain;
+  }
+  .brand .sub{
+    font-family:'Barlow Condensed', sans-serif;
+    font-size:22px; letter-spacing:.02em;
+    color:var(--accent);
+    text-transform:uppercase;
+    display:inline; font-weight:400;
+    margin-left:8px;
+  }
+  nav.links{display:flex; align-items:center; gap:30px;}
+  nav.links a{
+    font-size:13.5px; color:var(--text-muted);
+    transition:color .15s;
+    white-space:nowrap;
+  }
+  nav.links a:hover, nav.links a.active{color:var(--text);}
+  .nav-right{display:flex; align-items:center; gap:24px;}
+  .menu-toggle{display:none; background:none; border:1px solid var(--border); color:var(--text); width:40px; height:40px;}
+  @media (max-width:1020px){
+    nav.links{display:none;}
+    .menu-toggle{display:block;}
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    padding:90px 0 60px;
+    border-bottom:1px solid var(--border);
+    position:relative;
+  }
+  .hero::after{
+    content:"";
+    position:absolute; inset:40px 0 auto 0;
+    height:180px;
+    background:linear-gradient(90deg, rgba(255,159,67,.12), rgba(105,210,231,.08), transparent);
+    filter:blur(24px);
+    pointer-events:none;
+  }
+  .hero-grid{
+    display:grid; grid-template-columns:1.1fr .9fr; gap:64px; align-items:center;
+    position:relative; z-index:1;
+  }
+  @media (max-width:900px){ .hero-grid{grid-template-columns:1fr; gap:40px;} }
+  .hero h1{
+    font-size:clamp(36px, 5.2vw, 60px);
+    margin:18px 0 22px;
+  }
+  .hero h1 em{
+    font-style:normal; color:var(--accent);
+    text-shadow:0 0 24px rgba(255,159,67,.28);
+  }
+  .hero p.lead{
+    color:var(--text-muted); font-size:17px; max-width:52ch; margin-bottom:28px;
+  }
+  .hero-actions{display:flex; gap:16px; flex-wrap:wrap;}
+  .btn{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px; letter-spacing:.06em; text-transform:uppercase;
+    padding:12px 22px;
+    border:1px solid rgba(255,159,67,.6);
+    color:var(--accent);
+    display:inline-block;
+    transition:transform .2s ease, box-shadow .2s ease, background .2s ease, color .2s ease;
+    white-space:nowrap;
+    border-radius:999px;
+    box-shadow:0 0 0 rgba(255,159,67,0);
+  }
+  .btn:hover{
+    background:var(--accent);
+    color:#14181c;
+    transform:translateY(-1px);
+    box-shadow:0 10px 22px rgba(255,159,67,.18);
+  }
+  .btn.solid{background:linear-gradient(135deg, var(--accent) 0%, var(--accent-strong) 100%); color:#14181c; border-color:transparent;}
+  .btn.solid:hover{background:transparent; color:var(--accent); border-color:rgba(255,159,67,.6); box-shadow:none;}
+  .hero-stats{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:1px;
+    margin-top:48px; background:var(--border); border:1px solid var(--border);
+  }
+  .hero-stats div{background:var(--bg); padding:18px 20px;}
+  .hero-stats .num{font-family:'Barlow Condensed'; font-size:26px; font-weight:700; color:var(--accent-2);}
+  .hero-stats .label{font-family:'IBM Plex Mono'; font-size:10.5px; color:var(--text-muted); text-transform:uppercase; letter-spacing:.08em; margin-top:4px;}
+
+  /* ---------- Schematic ---------- */
+  .schematic{
+    background:linear-gradient(180deg, rgba(18,29,37,.94), rgba(11,17,22,.98));
+    border:1px solid rgba(255,255,255,.08);
+    padding:28px 20px 20px;
+    border-radius:22px;
+    box-shadow:var(--shadow);
+    position:relative;
+    overflow:hidden;
+  }
+  .schematic::before{
+    content:"";
+    position:absolute; inset:0;
+    background:radial-gradient(circle at 25% 20%, rgba(105,210,231,.14), transparent 26%);
+    pointer-events:none;
+  }
+  .schematic .schem-head{
+    display:flex; justify-content:space-between; align-items:baseline;
+    margin-bottom:18px;
+  }
+  .schematic .schem-head .tag{color:var(--accent-2);}
+  .node-label{font-family:'IBM Plex Mono', monospace; font-size:9.5px; fill:var(--text-muted); letter-spacing:.04em;}
+  .node-box{fill:var(--surface-2); stroke:var(--border); stroke-width:1;}
+  .node-box.active{stroke:var(--accent-2);}
+  .schem-line{stroke:var(--border); stroke-width:1.5; fill:none;}
+  .pulse{fill:var(--accent);}
+
+  /* ---------- Section shells ---------- */
+  section{padding:84px 0;}
+  section.tight{padding:60px 0;}
+  section:not(:last-of-type){border-bottom:1px solid var(--border);}
+  .section-head{
+    display:flex; justify-content:space-between; align-items:flex-end; gap:24px;
+    margin-bottom:44px; flex-wrap:wrap;
+  }
+  .section-head h2{font-size:clamp(28px,4vw,42px);}
+  .section-head p{color:var(--text-muted); max-width:44ch; font-size:15px;}
+  .alt{background:var(--surface);}
+
+  /* ---------- About ---------- */
+  .about-grid{display:grid; grid-template-columns:.95fr 1.05fr; gap:56px; align-items:center;}
+  @media (max-width:900px){ .about-grid{grid-template-columns:1fr; gap:32px;} }
+  .about-grid p{color:var(--text-muted); margin-bottom:16px; max-width:52ch;}
+  .about-facts{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:28px;}
+  .fact{border-top:1px solid var(--border); padding-top:12px;}
+  .fact .k{font-family:'IBM Plex Mono'; font-size:10.5px; color:var(--accent-2); text-transform:uppercase; letter-spacing:.06em;}
+  .fact .v{font-size:14.5px; margin-top:4px;}
+
+  /* ---------- Grid cards (Products / Services) ---------- */
+  .card-grid{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:18px;
+  }
+  .card-grid.cols-3{grid-template-columns:repeat(3,1fr);}
+  @media (max-width:900px){ .card-grid, .card-grid.cols-3{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:560px){ .card-grid, .card-grid.cols-3{grid-template-columns:1fr;} }
+  .card{
+    background:linear-gradient(180deg, rgba(11,17,22,.92), rgba(18,29,37,.98));
+    padding:0;
+    display:flex; flex-direction:column;
+    border:1px solid rgba(255,255,255,.06);
+    border-radius:18px;
+    overflow:hidden;
+    transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    box-shadow:0 14px 28px rgba(4,10,16,.18);
+  }
+  .alt .card{background:linear-gradient(180deg, rgba(18,29,37,.96), rgba(12,18,22,.98));}
+  .card:hover{
+    transform:translateY(-5px);
+    border-color:rgba(255,159,67,.35);
+    box-shadow:0 20px 44px rgba(4,10,16,.26);
+  }
+  .card .photo{border:none; border-bottom:1px solid var(--border); border-radius:0; box-shadow:none;}
+  .card-body{padding:24px;}
+  .card .tag{margin-bottom:14px; display:block;}
+  .card h3{font-size:18px; text-transform:none; letter-spacing:0; font-weight:600; margin-bottom:8px;}
+  .card p{font-size:13.5px; color:var(--text-muted);}
+
+  /* ---------- Process ---------- */
+  .process-row{display:grid; grid-template-columns:repeat(4,1fr); gap:0; border-top:1px solid var(--border);}
+  @media (max-width:800px){ .process-row{grid-template-columns:1fr;} }
+  .process-step{
+    padding:32px 28px;
+    border-right:1px solid var(--border);
+    border-bottom:1px solid var(--border);
+    background:linear-gradient(180deg, rgba(255,255,255,.01), rgba(255,255,255,.02));
+  }
+  .process-row .process-step:last-child{border-right:none;}
+  .process-step .step-num{font-family:'Barlow Condensed'; font-weight:700; font-size:42px; color:var(--surface-2); -webkit-text-stroke:1px var(--border);}
+  .alt .process-step .step-num{color:var(--bg); -webkit-text-stroke:1px var(--border);}
+  .process-step h3{font-size:18px; text-transform:none; letter-spacing:0; font-weight:600; margin:12px 0 8px;}
+  .process-step p{font-size:13.5px; color:var(--text-muted);}
+
+  .shop-stats{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--border); border:1px solid var(--border); margin-top:1px;}
+  @media (max-width:700px){ .shop-stats{grid-template-columns:repeat(2,1fr);} }
+  .shop-stats div{background:var(--bg); padding:22px 20px;}
+  .alt .shop-stats div{background:var(--surface);}
+  .shop-stats .num{font-family:'Barlow Condensed'; font-size:26px; font-weight:700; color:var(--accent);}
+  .shop-stats .label{font-family:'IBM Plex Mono'; font-size:10px; color:var(--text-muted); text-transform:uppercase; letter-spacing:.06em; margin-top:4px;}
+
+  /* ---------- Standards ---------- */
+  .standards{border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding:26px 0;}
+  .standards .wrap{display:flex; gap:40px; flex-wrap:wrap; align-items:center; justify-content:space-between;}
+  .standards .std-item{font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--text-muted); display:flex; align-items:center; gap:10px;}
+  .standards .std-item::before{content:"◆"; color:var(--accent); font-size:9px;}
+
+  /* ---------- Industries ---------- */
+  .industry-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--border); border:1px solid var(--border);}
+  @media (max-width:900px){ .industry-grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:600px){ .industry-grid{grid-template-columns:1fr;} }
+  .industry-card{
+    background:linear-gradient(180deg, rgba(11,17,22,.96), rgba(18,29,37,.96));
+    padding:28px 24px;
+    border:1px solid rgba(255,255,255,.06);
+    transition:transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+  }
+  .industry-card:hover{
+    transform:translateY(-3px);
+    border-color:rgba(105,210,231,.3);
+    box-shadow:0 18px 34px rgba(4,10,16,.2);
+  }
+  .industry-card h3{font-size:19px; text-transform:none; letter-spacing:0; font-weight:600; margin:6px 0 14px;}
+  .industry-card ul{list-style:none; display:grid; gap:8px;}
+  .industry-card li{
+    font-size:13px; color:var(--text-muted); padding-left:16px; position:relative;
+  }
+  .industry-card li::before{
+    content:""; position:absolute; left:0; top:7px; width:6px; height:1px; background:var(--accent-2);
+  }
+
+  /* ---------- Contact ---------- */
+  .contact{background:var(--surface);}
+  .contact-grid{display:grid; grid-template-columns:.9fr 1.1fr; gap:64px;}
+  @media (max-width:900px){ .contact-grid{grid-template-columns:1fr; gap:40px;} }
+  .contact-info h2{font-size:clamp(28px,4vw,40px); margin-bottom:16px;}
+  .contact-info p{color:var(--text-muted); margin-bottom:28px; max-width:42ch;}
+  .info-line{display:flex; gap:14px; padding:14px 0; border-top:1px solid var(--border); font-size:14.5px;}
+  .info-line:last-child{border-bottom:1px solid var(--border);}
+  .info-line .k{font-family:'IBM Plex Mono'; font-size:11px; color:var(--accent-2); width:100px; flex-shrink:0; text-transform:uppercase; letter-spacing:.06em; padding-top:2px;}
+
+  form{display:grid; gap:18px;}
+  .form-row{display:grid; grid-template-columns:1fr 1fr; gap:18px;}
+  @media (max-width:560px){ .form-row{grid-template-columns:1fr;} }
+  label{font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--text-muted); text-transform:uppercase; letter-spacing:.06em; display:block; margin-bottom:8px;}
+  input, select, textarea{
+    width:100%; background:var(--bg); border:1px solid var(--border); color:var(--text);
+    padding:13px 14px; font-family:'IBM Plex Sans'; font-size:14px;
+  }
+  input:focus, select:focus, textarea:focus{border-color:var(--accent-2);}
+  textarea{resize:vertical; min-height:110px;}
+  form .btn{border:none; cursor:pointer; font-size:12.5px; padding:15px 26px; margin-top:6px; justify-self:start;}
+  .form-note{font-size:12px; color:var(--text-muted);}
+
+  /* ---------- Footer ---------- */
+  footer{padding:44px 0 32px;}
+  .footer-grid{display:flex; justify-content:space-between; flex-wrap:wrap; gap:24px; align-items:center;}
+  .footer-links{display:flex; gap:26px; flex-wrap:wrap;}
+  .footer-links a{font-size:13px; color:var(--text-muted);}
+  .footer-links a:hover{color:var(--text);}
+  .copyright{font-family:'IBM Plex Mono'; font-size:11.5px; color:var(--text-muted); margin-top:24px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <div class="brand">
+      <img src="logo-veridyn-transparent.png" alt="Veridyn Process Automation" class="logo">
+      <span>VERIDYN<span class="sub">PROCESS AUTOMATION</span></span>
+    </div>
+    <nav class="links">
+      <a href="#home" class="active">Home</a>
+      <a href="#about">About Us</a>
+      <a href="#products">Products</a>
+      <a href="#services">Services</a>
+      <a href="#capabilities">Capabilities</a>
+      <a href="#industries">Industries</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="nav-right">
+      <a href="#contact" class="btn">Request a Quote</a>
+      <button class="menu-toggle" aria-label="Open menu">≡</button>
+    </div>
+  </div>
+</header>
+
+<section id="home" class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">Control &amp; Automation Engineering — </span>
+      <h1>We build the panels<br>that run the <em>plant.</em></h1>
+      <p class="lead"><strong style="color:var(--accent);">VERIDYN</strong> designs, engineers, and manufactures PLC control panels, SCADA systems, and industrial I/O infrastructure — from single-line diagram to commissioned system.</p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn solid">Request a Quote</a>
+        <a href="#products" class="btn">View Products</a>
+      </div>
+      <div class="hero-stats">
+        <div><div class="num">TOTAL SOLUTIONS FOR SKID PACKAGES</div><div class="label">Engineering to Field</div></div>
+        <div><div class="num">UL 508A & IEC 61439 01 & 02</div><div class="label">Panel Build Practice</div></div>
+        <div><div class="num">SERVING UAE & USA </div><div class="label">OFFICES IN DUBAI & CALIFORNIA</div></div>
+      </div>
+    </div>
+
+    <div class="schematic">
+      <div class="schem-head">
+        <span class="tag">DWG NO. VRD-SIG-001</span>
+        <span class="tag">SIGNAL PATH — REV A</span>
+      </div>
+      <svg viewBox="0 0 460 220" width="100%" role="img" aria-label="Diagram of signal flow from field device through junction box, remote I/O, PLC, to SCADA system">
+        <path class="schem-line" d="M50,190 L50,150 L150,150 L150,110 L250,110 L250,70 L350,70 L350,30 L410,30" />
+        <rect class="node-box" x="20" y="185" width="60" height="30"/>
+        <text class="node-label" x="24" y="230">FIELD DEVICE</text>
+        <text class="node-label" x="24" y="242" style="fill:var(--accent-2)">FD-01</text>
+        <rect class="node-box" x="120" y="118" width="60" height="30"/>
+        <text class="node-label" x="126" y="163">JUNCTION BOX</text>
+        <text class="node-label" x="126" y="175" style="fill:var(--accent-2)">JB-04</text>
+        <rect class="node-box" x="220" y="78" width="60" height="30"/>
+        <text class="node-label" x="222" y="66">REMOTE I/O</text>
+        <text class="node-label" x="222" y="123" style="fill:var(--accent-2)">RIO-02</text>
+        <rect class="node-box active" x="320" y="38" width="60" height="30"/>
+        <text class="node-label" x="332" y="26">PLC</text>
+        <text class="node-label" x="326" y="83" style="fill:var(--accent-2)">PLC-01</text>
+        <rect class="node-box active" x="392" y="4" width="56" height="30"/>
+        <text class="node-label" x="396" y="53" style="fill:var(--accent-2)">SCADA / HMI</text>
+        <circle r="3.4" class="pulse">
+          <animateMotion dur="4.5s" repeatCount="indefinite" path="M50,190 L50,150 L150,150 L150,110 L250,110 L250,70 L350,70 L350,30 L410,30" />
+        </circle>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap about-grid">
+    <img src="ChatGPT Image Aug 18, 2026, 12_48_17 PM.png" alt="Panel assembly floor" class="photo wide" style="width:100%; height:100%; object-fit:cover; object-position:center;">
+    <div>
+      <span class="eyebrow">About Us</span>
+      <h2 style="margin:14px 0 18px; font-size:clamp(26px,3.6vw,38px);">Engineering-led, shop-built</h2>
+      <p><strong style="color:var(--accent);">VERIDYN</strong> is a control and process automation engineering firm based in Dubai, serving clients globally across the oil and gas, power, renewable energy, data center, chemical and petrochemical, wastewater treatment, and thermal energy storage industries.</p>
+      <p>We combine in-house control engineering, panel design, and manufacturing under one roof — so the same team that draws your schematics also builds, wires, and tests the panel before it leaves the shop.</p>
+      <div class="about-facts">
+        <div class="fact"><div class="k">Headquarters</div><div class="v">Dubai, UAE</div></div>
+        <div class="fact"><div class="k">Focus</div><div class="v">Control &amp; Automation Systems</div></div>
+        <div class="fact"><div class="k">Build Practice</div><div class="v">IEC & UL Panel Shop Standards</div></div>
+        <div class="fact"><div class="k">Delivery</div><div class="v">Design – Build – Integrate – Commission</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="products" class="alt">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Products</span>
+        <h2 style="margin-top:14px;">Panels we manufacture</h2>
+      </div>
+      <p>Custom-built to your process and site conditions, engineered and assembled in-house.</p>
+    </div>
+    <div class="card-grid">
+      <div class="card">
+        <img src="ChatGPT Image Aug 18, 2026, 12_47_45 PM (1).png" alt="PLC Control Panel" style="width:100%; height:250px; object-fit:cover; display:block; margin:0; padding:0;">
+        <div class="card-body">
+          <span class="tag">PRODUCT / 01</span>
+          <h3>PLC Control Panels</h3>
+          <p>Custom-engineered control panels wired and tested to IEC & UL practice.</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="ChatGPT Image Aug 18, 2026, 12_47_45 PM (2).png" alt="Junction Box" style="width:100%; height:250px; object-fit:cover; display:block; margin:0; padding:0;">
+        <div class="card-body">
+          <span class="tag">PRODUCT / 02</span>
+          <h3>Junction Boxes</h3>
+          <p>Field signal and power distribution boxes for indoor, outdoor, and hazardous areas.</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="ChatGPT Image Aug 18, 2026, 12_47_45 PM (3).png" alt="ESD Panel" style="width:100%; height:250px; object-fit:cover; display:block; margin:0; padding:0;">
+        <div class="card-body">
+          <span class="tag">PRODUCT / 03</span>
+          <h3>ESD Panels</h3>
+          <p>Emergency shutdown panels for safety-instrumented process trips and fail-safe logic.</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="ChatGPT Image Aug 18, 2026, 12_47_45 PM (4).png" alt="Local Control Panel" style="width:100%; height:250px; object-fit:cover; display:block; margin:0; padding:0;">
+        <div class="card-body">
+          <span class="tag">PRODUCT / 04</span>
+          <h3>Local Control Panels (LCP)</h3>
+          <p>Skid- and equipment-mounted LCPs for local monitoring and interlocks.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Services</span>
+        <h2 style="margin-top:14px;">Programming &amp; systems integration</h2>
+      </div>
+      <p>The engineering work that connects your panels into a working, monitored system.</p>
+    </div>
+    <div class="card-grid">
+      <div class="card">
+        <img src="ChatGPT Image Aug 18, 2026, 12_48_05 PM (1).png" alt="SCADA and HMI control room" style="width:100%; height:250px; object-fit:cover; object-position:center; display:block; margin:0; padding:0;">
+        <div class="card-body">
+          <span class="tag">SERVICE / 01</span>
+          <h3>SCADA Integration &amp; Programming</h3>
+          <p>SCADA/HMI architecture, tag databases, and programming for real-time process control.</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="ChatGPT Image Aug 18, 2026, 12_48_05 PM (2).png" alt="Remote I/O control panel" style="width:100%; height:250px; object-fit:cover; object-position:center; display:block; margin:0; padding:0;">
+        <div class="card-body">
+          <span class="tag">SERVICE / 02</span>
+          <h3>Remote I/O &amp; Industrial IoT</h3>
+          <p>Distributed I/O and edge connectivity for remote monitoring and reduced field wiring.</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="ChatGPT Image Aug 18, 2026, 12_48_05 PM (3).png" alt="PLC and DCS control system" style="width:100%; height:250px; object-fit:cover; object-position:center; display:block; margin:0; padding:0;">
+        <div class="card-body">
+          <span class="tag">SERVICE / 03</span>
+          <h3>PLC &amp; DCS Integration</h3>
+          <p>Controller programming and integration across major platforms, including migrations.</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="ChatGPT Image Aug 18, 2026, 12_48_05 PM (4).png" alt="Engineering and design workstation" style="width:100%; height:250px; object-fit:cover; object-position:center; display:block; margin:0; padding:0;">
+        <div class="card-body">
+          <span class="tag">SERVICE / 04</span>
+          <h3>Engineering &amp; Design</h3>
+          <p>P&amp;IDs, single-line diagrams, panel schematics, and I/O point lists.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="capabilities" class="alt">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Capabilities</span>
+        <h2 style="margin-top:14px;">From drawing to commissioning</h2>
+      </div>
+      <p>Every project moves through the same four disciplines, in-house, start to finish.</p>
+    </div>
+  </div>
+  <div class="process-row">
+    <div class="process-step">
+      <div class="step-num">01</div>
+      <h3>Engineering</h3>
+      <p>Process review, single-line and P&amp;ID development, and control philosophy definition.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">02</div>
+      <h3>Design</h3>
+      <p>Panel layout, schematics, bill of materials, and I/O point lists ready for build and review.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">03</div>
+      <h3>Manufacturing</h3>
+      <p>In-house panel fabrication, wiring, and point-to-point testing before it leaves the shop.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">04</div>
+      <h3>Integration &amp; Commissioning</h3>
+      <p>PLC/SCADA programming, loop checks, and on-site startup support through handover.</p>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="shop-stats">
+      <div><div class="num">IEC &amp; UL Standards</div><div class="label">Build Practice</div></div>
+      <div><div class="num">100%</div><div class="label">Point-to-Point Tested</div></div>
+      <div><div class="num">NEMA, IP &amp; ATEX</div><div class="label">Rated Enclosures</div></div>
+      <div><div class="num">In-House</div><div class="label">Design to Fab</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="standards" class="standards">
+  <div class="wrap">
+    <span class="std-item">Panels built to Stringent quality standards</span>
+    <span class="std-item">NEC &amp; IEC electrical standards</span>
+    <span class="std-item">ISA-based control philosophy</span>
+    <span class="std-item">Vendor-neutral PLC / SCADA platforms</span>
+  </div>
+</section>
+
+<section id="industries">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Industries We Serve</span>
+        <h2 style="margin-top:14px;">Where our panels run</h2>
+      </div>
+      <p>Serving oil &amp; gas, power, chemical, petrochemical, renewable energy, water treatment, and thermal energy storage sectors.</p>
+    </div>
+    <div class="industry-grid">
+      <div class="industry-card">
+        <span class="tag">INDUSTRY / 01</span>
+        <h3>Oil &amp; Gas</h3>
+        <ul>
+          <li>Skid and Package Automation — Control solutions for chemical injection, metering, pump, pressure-reduction and utility skids.</li>
+          <li>PLC, HMI, SCADA and ESD Systems — Reliable control, monitoring and emergency-shutdown systems for critical operations.</li>
+          <li>Instrumentation and Control Panels — Engineering and integration of field instruments, junction boxes, Remote I/O and custom control panels.</li>
+          <li>Testing and Lifecycle Support — FAT, SAT, commissioning, troubleshooting, modernization and ongoing technical support.</li>
+        </ul>
+      </div>
+      <div class="industry-card">
+        <span class="tag">INDUSTRY / 02</span>
+        <h3>Power</h3>
+        <ul>
+          <li>Power-Plant Auxiliary Automation — Control systems for pumps, cooling systems, fuel handling and balance-of-plant equipment.</li>
+          <li>PLC and SCADA Integration — Centralized monitoring, alarm management, sequencing and plant-system communication.</li>
+          <li>Control and Protection Panels — Engineered panels with interlocks, protection logic and reliable operator controls.</li>
+          <li>System Modernization — PLC migration, control-panel upgrades and digitalization of legacy power-generation systems.</li>
+        </ul>
+      </div>
+      <div class="industry-card">
+        <span class="tag">INDUSTRY / 03</span>
+        <h3>Renewable Energy &amp; Data Centers</h3>
+        <ul>
+          <li>Renewable-Energy Automation — Control and monitoring solutions for solar, wind, battery-storage and hybrid-energy packages.</li>
+          <li>Critical Utility Control — Automation for cooling, pumping, fuel, water-treatment and backup-power systems.</li>
+          <li>Energy and Performance Monitoring — Real-time visualization, alarms, trends and operational data acquisition.</li>
+          <li>High-Availability Integration — Redundant control architectures and dependable interfaces for mission-critical facilities.</li>
+        </ul>
+      </div>
+      <div class="industry-card">
+        <span class="tag">INDUSTRY / 04</span>
+        <h3>Chemical &amp; Petrochemical</h3>
+        <ul>
+          <li>Process Automation — PLC, HMI and SCADA solutions for dosing, blending, transfer and continuous process operations.</li>
+          <li>Safety and Interlocking Systems — ESD logic, permissives, alarms and shutdown sequences for hazardous processes.</li>
+          <li>Instrumentation Engineering — Selection and integration of flow, pressure, temperature, level and analytical instruments.</li>
+          <li>Packaged Process Systems — Complete automation for chemical injection, metering, pumping and utility skids.</li>
+        </ul>
+      </div>
+      <div class="industry-card">
+        <span class="tag">INDUSTRY / 05</span>
+        <h3>Waste Water Treatment</h3>
+        <ul>
+          <li>Treatment-Process Automation — Control solutions for screening, filtration, aeration, clarification, disinfection and sludge handling.</li>
+          <li>Pump and Dosing Control — Reliable sequencing and monitoring of transfer pumps, lift stations and chemical-dosing systems.</li>
+          <li>Remote Monitoring and SCADA — Centralized supervision, alarm management, trending and operational reporting.</li>
+          <li>Instrumentation Integration — Integration of flowmeters, level transmitters, analyzers, valves and water-quality instruments.</li>
+        </ul>
+      </div>
+      <div class="industry-card">
+        <span class="tag">INDUSTRY / 06</span>
+        <h3>Thermal Energy Storage</h3>
+        <ul>
+          <li>Charging and Discharging Control — Automated operating sequences for efficient thermal-energy storage and recovery.</li>
+          <li>Pump and Valve Automation — Precise control of circulation pumps, isolation valves and temperature-management equipment.</li>
+          <li>Performance Monitoring — Continuous tracking of temperature, flow, pressure, storage capacity and system efficiency.</li>
+          <li>Plant-System Integration — Seamless communication with HVAC, district-cooling, power-management and supervisory systems.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="contact">
+  <div class="wrap contact-grid">
+    <div class="contact-info">
+      <span class="eyebrow">Get In Touch</span>
+      <h2 style="margin-top:14px;">Start a project</h2>
+      <p>Tell us about your process and we'll follow up with next steps — most quotes are returned within two business days.</p>
+
+      <div class="info-line"><span class="k">Company</span><span style="color:var(--accent);">VERIDYN PROCESS AUTOMATION</span></div>
+      <div class="info-line"><span class="k">Location</span><span>SF Bay Area &amp; Dubai</span></div>
+      <div class="info-line"><span class="k">Email</span><span>sales@veridynprocess.com</span></div>
+      <div class="info-line"><span class="k">Phone</span><span>USA: +1 510 850 6955 &nbsp;&nbsp;&nbsp;&nbsp; UAE: +97150 455 9656</span></div>
+    </div>
+
+    <form id="quote-form" action="https://formspree.io/f/mvkpvwnz" method="POST">
+      <div class="form-row">
+        <div>
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" required>
+        </div>
+        <div>
+          <label for="company">Company</label>
+          <input id="company" name="company" type="text">
+        </div>
+      </div>
+      <div class="form-row">
+        <div>
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" required>
+        </div>
+        <div>
+          <label for="phone">Phone</label>
+          <input id="phone" name="phone" type="tel">
+        </div>
+      </div>
+      <div>
+        <label for="project">Project Type</label>
+        <select id="project" name="project">
+          <option>PLC Control Panel</option>
+          <option>Junction Box</option>
+          <option>ESD Panel</option>
+          <option>Local Control Panel (LCP)</option>
+          <option>SCADA Integration / Programming</option>
+          <option>Industrial IoT</option>
+          <option>Remote I/O Panel</option>
+          <option>PLC / DCS Integration</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div>
+        <label for="message">Project Details</label>
+        <textarea id="message" name="message" required placeholder="Describe your process, scope, and timeline."></textarea>
+      </div>
+      <button type="submit" class="btn solid">Submit Request</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="brand" style="font-size:17px;">
+        <img src="logo-veridyn-transparent.png" alt="Veridyn Process Automation" class="logo" style="width:48px;height:48px;">
+        VERIDYN <span class="sub" style="font-size:17px; display:inline;">PROCESS AUTOMATION</span>
+      </div>
+      <div class="footer-links">
+        <a href="#about">About Us</a>
+        <a href="#products">Products</a>
+        <a href="#services">Services</a>
+        <a href="#capabilities">Capabilities</a>
+        <a href="#industries">Industries</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+    <div class="copyright">© 2026 VERIDYN PROCESS AUTOMATION. California. All rights reserved.</div>
+  </div>
+</footer>
+
+</body>
+</html>
