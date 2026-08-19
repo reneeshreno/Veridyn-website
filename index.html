@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VERIDYN PROCESS AUTOMATION — Control &amp; Automation Engineering</title>
+<title>VERIDYN PROCESS AUTOMATION | Industrial Control &amp; Automation</title>
+<meta name="description" content="VERIDYN PROCESS AUTOMATION provides industrial control engineering, PLC programming, SCADA integration, panel fabrication, and commissioning for process and utility operations.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -147,10 +148,46 @@
   }
   nav.links a:hover, nav.links a.active{color:var(--text);}
   .nav-right{display:flex; align-items:center; gap:24px;}
-  .menu-toggle{display:none; background:none; border:1px solid var(--border); color:var(--text); width:40px; height:40px;}
+  .menu-toggle{display:none; background:none; border:1px solid var(--border); color:var(--text); width:40px; height:40px; border-radius:10px; font-size:22px; line-height:1; cursor:pointer;}
+  .nav .links.menu-open{display:flex;}
+
   @media (max-width:1020px){
     nav.links{display:none;}
     .menu-toggle{display:block;}
+  }
+  @media (max-width:760px){
+    .nav{height:auto; padding:16px 0; flex-wrap:wrap;}
+    .brand{gap:10px; font-size:19px;}
+    .brand .logo{width:52px; height:52px;}
+    .brand .sub{font-size:16px; display:block; margin-left:0;}
+    .nav-right{margin-left:auto;}
+    .nav-right .btn{display:none;}
+    nav.links{
+      display:none;
+      width:100%;
+      order:3;
+      flex-direction:column;
+      align-items:flex-start;
+      gap:14px;
+      padding-top:16px;
+      border-top:1px solid var(--border);
+    }
+    .nav .links.menu-open{display:flex;}
+    nav.links a{font-size:14px;}
+  }
+  @media (max-width:560px){
+    .wrap{padding:0 16px;}
+    .hero{padding:60px 0 48px;}
+    .hero-grid{gap:28px;}
+    .hero-actions{flex-direction:column; align-items:stretch;}
+    .btn{display:block; text-align:center; width:100%;}
+    .hero-stats{grid-template-columns:1fr;}
+    .about-facts{grid-template-columns:1fr;}
+    .shop-stats{grid-template-columns:1fr 1fr;}
+    .info-line{flex-direction:column; gap:8px;}
+    .info-line .k{width:auto;}
+    .footer-grid{flex-direction:column; align-items:flex-start;}
+    .footer-links{gap:12px 18px;}
   }
 
   /* ---------- Hero ---------- */
@@ -211,6 +248,10 @@
   .hero-stats div{background:var(--bg); padding:18px 20px;}
   .hero-stats .num{font-family:'Barlow Condensed'; font-size:26px; font-weight:700; color:var(--accent-2);}
   .hero-stats .label{font-family:'IBM Plex Mono'; font-size:10.5px; color:var(--text-muted); text-transform:uppercase; letter-spacing:.08em; margin-top:4px;}
+  @media (max-width:700px){
+    .hero-stats{grid-template-columns:1fr;}
+    .hero-stats .num{font-size:22px;}
+  }
 
   /* ---------- Schematic ---------- */
   .schematic{
@@ -402,7 +443,7 @@
     <div>
       <span class="eyebrow">Control &amp; Automation Engineering — </span>
       <h1>We build the panels<br>that run the <em>plant.</em></h1>
-      <p class="lead"><strong style="color:var(--accent);">VERIDYN</strong> designs, engineers, and manufactures PLC control panels, SCADA systems, and industrial I/O infrastructure — from single-line diagram to commissioned system.</p>
+      <p class="lead"><strong style="color:var(--accent);">VERIDYN PROCESS AUTOMATION</strong> delivers industrial control and automation solutions for process plants, utilities, and critical infrastructure — from control panel design and PLC programming to system integration and commissioning.</p>
       <div class="hero-actions">
         <a href="#contact" class="btn solid">Request a Quote</a>
         <a href="#products" class="btn">View Products</a>
@@ -449,8 +490,8 @@
     <div>
       <span class="eyebrow">About Us</span>
       <h2 style="margin:14px 0 18px; font-size:clamp(26px,3.6vw,38px);">Engineering-led, shop-built</h2>
-      <p><strong style="color:var(--accent);">VERIDYN</strong> is a control and process automation engineering firm based in Dubai, serving clients globally across the oil and gas, power, renewable energy, data center, chemical and petrochemical, wastewater treatment, and thermal energy storage industries.</p>
-      <p>We combine in-house control engineering, panel design, and manufacturing under one roof — so the same team that draws your schematics also builds, wires, and tests the panel before it leaves the shop.</p>
+      <p><strong style="color:var(--accent);">VERIDYN PROCESS AUTOMATION</strong> is an industrial automation company focused on control system engineering, panel fabrication, PLC programming, SCADA integration, and commissioning for process and utility operations.</p>
+      <p>We support clients across oil and gas, power, water treatment, renewable energy, data centers, and process industries with practical, in-house engineering and field-ready solutions.</p>
       <div class="about-facts">
         <div class="fact"><div class="k">Headquarters</div><div class="v">Dubai, UAE</div></div>
         <div class="fact"><div class="k">Focus</div><div class="v">Control &amp; Automation Systems</div></div>
@@ -688,7 +729,6 @@
       <div class="info-line"><span class="k">Company</span><span style="color:var(--accent);">VERIDYN PROCESS AUTOMATION</span></div>
       <div class="info-line"><span class="k">Location</span><span>SF Bay Area &amp; Dubai</span></div>
       <div class="info-line"><span class="k">Email</span><span>sales@veridynprocess.com</span></div>
-      <div class="info-line"><span class="k">Phone</span><span>USA: +1 510 850 6955 &nbsp;&nbsp;&nbsp;&nbsp; UAE: +97150 455 9656</span></div>
     </div>
 
     <form id="quote-form" action="https://formspree.io/f/mvkpvwnz" method="POST">
@@ -754,6 +794,25 @@
     <div class="copyright">© 2026 VERIDYN PROCESS AUTOMATION. California. All rights reserved.</div>
   </div>
 </footer>
+
+<script>
+  const menuToggle = document.querySelector('.menu-toggle');
+  const navLinks = document.querySelector('nav.links');
+
+  if (menuToggle && navLinks) {
+    menuToggle.addEventListener('click', () => {
+      const isOpen = navLinks.classList.toggle('menu-open');
+      menuToggle.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    navLinks.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('menu-open');
+        menuToggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+</script>
 
 </body>
 </html>
