@@ -119,26 +119,18 @@
     height:76px;
   }
   .brand{
-    display:flex; align-items:center; gap:12px;
-    font-family:'Barlow Condensed', sans-serif;
-    font-weight:700; font-size:22px; letter-spacing:.02em;
-    text-transform:uppercase;
-    color:var(--accent);
+    display:flex; align-items:center;
+    min-width:0;
   }
   .brand .logo{
-    width:64px; height:64px;
-    display:flex; align-items:center; justify-content:center;
-    position:relative;
-    flex-shrink:0;
+    width:min(380px, 34vw);
+    height:auto;
+    display:block;
     object-fit:contain;
+    filter:drop-shadow(0 8px 20px rgba(0,0,0,.15));
   }
   .brand .sub{
-    font-family:'Barlow Condensed', sans-serif;
-    font-size:22px; letter-spacing:.02em;
-    color:var(--accent);
-    text-transform:uppercase;
-    display:inline; font-weight:400;
-    margin-left:8px;
+    display:none;
   }
   nav.links{display:flex; align-items:center; gap:30px;}
   nav.links a{
@@ -158,7 +150,7 @@
   @media (max-width:760px){
     .nav{height:auto; padding:16px 0; flex-wrap:wrap;}
     .brand{gap:10px; font-size:19px;}
-    .brand .logo{width:52px; height:52px;}
+    .brand .logo{width:min(240px, 62vw); height:auto;}
     .brand .sub{font-size:16px; display:block; margin-left:0;}
     .nav-right{margin-left:auto;}
     .nav-right .btn{display:none;}
@@ -167,13 +159,19 @@
       width:100%;
       order:3;
       flex-direction:column;
-      align-items:flex-start;
-      gap:14px;
+      align-items:stretch;
+      gap:0;
       padding-top:16px;
       border-top:1px solid var(--border);
     }
     .nav .links.menu-open{display:flex;}
-    nav.links a{font-size:14px;}
+    nav.links a{
+      font-size:14px;
+      padding:12px 10px;
+      border-bottom:1px solid rgba(255,255,255,.04);
+      width:100%;
+    }
+    nav.links a:last-child{border-bottom:none;}
   }
   @media (max-width:560px){
     .wrap{padding:0 16px;}
@@ -402,15 +400,41 @@
   }
   input:focus, select:focus, textarea:focus{border-color:var(--accent-2);}
   textarea{resize:vertical; min-height:110px;}
+  .captcha-box{
+    display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+    padding:12px 14px; border:1px solid var(--border); background:var(--bg); border-radius:12px;
+  }
+  .captcha-box strong{font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:.05em; color:var(--accent);}
+  .captcha-box input{
+    max-width:120px; flex:1 1 120px; background:transparent; border:1px solid var(--border); padding:10px 12px;
+  }
+  .captcha-error{font-size:12px; color:#ffb4b4; display:none; margin-top:-6px;}
+  .captcha-error.show{display:block;}
   form .btn{border:none; cursor:pointer; font-size:12.5px; padding:15px 26px; margin-top:6px; justify-self:start;}
   .form-note{font-size:12px; color:var(--text-muted);}
 
   /* ---------- Footer ---------- */
   footer{padding:44px 0 32px;}
   .footer-grid{display:flex; justify-content:space-between; flex-wrap:wrap; gap:24px; align-items:center;}
-  .footer-links{display:flex; gap:26px; flex-wrap:wrap;}
+  .footer-brand{display:flex; align-items:center; gap:42px; flex-wrap:wrap; margin-right:auto;}
+  .footer-links{display:flex; gap:26px; flex-wrap:wrap; align-items:center; margin-left:auto; justify-content:flex-end;}
   .footer-links a{font-size:13px; color:var(--text-muted);}
   .footer-links a:hover{color:var(--text);}
+  .social-link{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 12px;
+    border:1px solid var(--border);
+    border-radius:999px;
+    background:rgba(255,255,255,.02);
+  }
+  .social-link:hover{border-color:rgba(105,210,231,.4); color:var(--text);}
+  .social-icon{
+    width:18px; height:18px; display:inline-flex; align-items:center; justify-content:center;
+    border-radius:50%; background:var(--accent-2); color:#0b1116; font-size:10px; font-weight:700;
+    font-family:'IBM Plex Mono', monospace;
+  }
   .copyright{font-family:'IBM Plex Mono'; font-size:11.5px; color:var(--text-muted); margin-top:24px;}
 </style>
 </head>
@@ -419,14 +443,14 @@
 <header>
   <div class="wrap nav">
     <div class="brand">
-      <img src="logo-veridyn-transparent.png" alt="Veridyn Process Automation" class="logo">
-      <span>VERIDYN<span class="sub">PROCESS AUTOMATION</span></span>
+      <img src="vpa_veridyn_4k_ultra_hires.png" alt="Veridyn Process Automation" class="logo">
     </div>
     <nav class="links">
       <a href="#home" class="active">Home</a>
       <a href="#about">About Us</a>
       <a href="#products">Products</a>
       <a href="#services">Services</a>
+      <a href="mechanical.html">Mechanical</a>
       <a href="#capabilities">Capabilities</a>
       <a href="#industries">Industries</a>
       <a href="#contact">Contact</a>
@@ -442,7 +466,7 @@
   <div class="wrap hero-grid">
     <div>
       <span class="eyebrow">Control &amp; Automation Engineering — </span>
-      <h1>We build the panels<br>that run the <em>plant.</em></h1>
+      <h1>Automating trust,<br>Growing <em>performance.</em></h1>
       <p class="lead"><strong style="color:var(--accent);">VERIDYN PROCESS AUTOMATION</strong> delivers industrial control and automation solutions for process plants, utilities, and critical infrastructure — from control panel design and PLC programming to system integration and commissioning.</p>
       <div class="hero-actions">
         <a href="#contact" class="btn solid">Request a Quote</a>
@@ -590,6 +614,18 @@
           <p>P&amp;IDs, single-line diagrams, panel schematics, and I/O point lists.</p>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<section id="mechanical">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Mechanical</span>
+        <h2 style="margin-top:14px;">Mechanical systems & package support</h2>
+      </div>
+      <p>Integrated mechanical support for utility, process, and skid-based systems, aligned with control and automation scope.</p>
     </div>
   </div>
 </section>
@@ -770,6 +806,14 @@
         <label for="message">Project Details</label>
         <textarea id="message" name="message" required placeholder="Describe your process, scope, and timeline."></textarea>
       </div>
+      <div>
+        <label>Security Check</label>
+        <div class="captcha-box">
+          <strong>7 + 3 = ?</strong>
+          <input id="captcha" name="captcha" type="text" maxlength="2" autocomplete="off" aria-label="Security check answer">
+        </div>
+        <div id="captcha-error" class="captcha-error">Please enter the correct answer to continue.</div>
+      </div>
       <button type="submit" class="btn solid">Submit Request</button>
     </form>
   </div>
@@ -778,9 +822,14 @@
 <footer>
   <div class="wrap">
     <div class="footer-grid">
-      <div class="brand" style="font-size:17px;">
-        <img src="logo-veridyn-transparent.png" alt="Veridyn Process Automation" class="logo" style="width:48px;height:48px;">
-        VERIDYN <span class="sub" style="font-size:17px; display:inline;">PROCESS AUTOMATION</span>
+      <div class="footer-brand">
+        <div class="brand" style="font-size:17px;">
+          <img src="vpa_veridyn_4k_ultra_hires.png" alt="Veridyn Process Automation" class="logo" style="width:220px;height:auto;">
+        </div>
+        <a class="social-link" href="https://www.linkedin.com/company/veridynprocess/" target="_blank" rel="noopener noreferrer">
+          <span class="social-icon">in</span>
+          LinkedIn
+        </a>
       </div>
       <div class="footer-links">
         <a href="#about">About Us</a>
@@ -798,6 +847,9 @@
 <script>
   const menuToggle = document.querySelector('.menu-toggle');
   const navLinks = document.querySelector('nav.links');
+  const form = document.getElementById('quote-form');
+  const captchaInput = document.getElementById('captcha');
+  const captchaError = document.getElementById('captcha-error');
 
   if (menuToggle && navLinks) {
     menuToggle.addEventListener('click', () => {
@@ -810,6 +862,19 @@
         navLinks.classList.remove('menu-open');
         menuToggle.setAttribute('aria-expanded', 'false');
       });
+    });
+  }
+
+  if (form && captchaInput && captchaError) {
+    form.addEventListener('submit', (event) => {
+      const answer = captchaInput.value.trim();
+      if (answer !== '10') {
+        event.preventDefault();
+        captchaError.classList.add('show');
+        captchaInput.focus();
+        return;
+      }
+      captchaError.classList.remove('show');
     });
   }
 </script>
